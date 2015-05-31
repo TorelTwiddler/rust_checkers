@@ -1,23 +1,25 @@
 
-const BOARD_SIZE: i32 = 8;
+const BOARD_SIZE : usize = 8;
 
 fn main() {
   let mut board: Board = Default::default();
   board.print();
-  board.places[2][3] = 4;
+  board.places[2][3] = Some(Piece {id: 4});
   board.print();
 }
 
 struct Board {
-    places: [[i32; 8]; 8],
+    places: [[Option<Piece>; BOARD_SIZE]; BOARD_SIZE],
 }
 
-impl Board {
-    fn print(&self) {
+impl Board { fn print(&self) {
         println!("---- Board ----");
-        for i in 1 .. 8 {
-            for j in 1 .. 8 {
-                print!("{}", self.places[i][j]);
+        for i in 1 .. BOARD_SIZE {
+            for j in 1 .. BOARD_SIZE {
+                match self.places[i][j] {
+                    Some(Piece {id, .. }) => print!("{:?}", id),
+                    None => print!("0"),
+                }
             }
             println!(" ");
         }
@@ -27,18 +29,12 @@ impl Board {
 impl Default for Board {
     fn default() -> Board {
         Board {
-            places: [[0; 8]; 8],
+            places: [[None; BOARD_SIZE]; BOARD_SIZE],
         }
     }
 }
 
+#[derive(Debug, Copy, Clone)]
 struct Piece {
     id: i32,
-    name: str,
 }
-
-// impl Display for Piece {
-//     fn fmt(&self, formatter: &mut Formatter) -> Result<(), Error> {
-//         formatter.write_str(self.id)
-//     }
-// }
