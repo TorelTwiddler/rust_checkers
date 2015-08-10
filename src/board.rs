@@ -113,7 +113,6 @@ impl Board {
         }
         // Catty-corner check
         if !from.is_catty_corner(to) {
-            println!("not catty-corner");
             return false;
         }
         return true;
@@ -127,5 +126,23 @@ impl Default for Board {
         Board {
             places: [[None; 8]; 8],
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Board;
+    use position::Position;
+    
+    #[test]
+    fn test_valid_move() {
+        let mut board: Board = Default::default();
+        board.new_game();
+        println!("{:?}", board.places[0][2]);
+        println!("{:?}", board.places[1][3]);
+        println!("{:?}", board.places[2][0]);
+        println!("{:?}", board.places[3][1]);
+        assert_eq!(true, board.valid_move(
+            Position {x: 0, y: 2}, Position {x: 1, y: 3}));
     }
 }

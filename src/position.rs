@@ -20,7 +20,6 @@ impl Position {
 #[cfg(test)]
 mod tests {
     use super::Position;
-    use board::Board;
     
     #[test]
     fn test_is_catty_corner() {
