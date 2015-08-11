@@ -10,6 +10,6 @@ fn main() {
     board.print();
     board.new_game();
     board.print();
-    println!("\n{:?}", board.move_piece(Position {x: 0, y: 2}, Position {x: 1, y: 3}).is_ok());
+    println!("\n{:?}", board.move_piece(Position {row: 2, column: 0}, Position {row: 3, column: 1}));
     board.print();
 }

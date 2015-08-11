@@ -1,16 +1,16 @@
 
-/// A position on the board, x being the row, y the column.
+/// A position on the board.
 #[derive(Debug, Copy, Clone)]
 pub struct Position {
-    pub x: usize,
-    pub y: usize,
+    pub row: usize,
+    pub column: usize,
 }
 
 impl Position {
     /// Checks if the other Position is catty-corner to this one
     pub fn is_catty_corner(&self, other: Position) -> bool {
-        if (self.x + 1 == other.x || self.x - 1 == other.x) &&
-           (self.y + 1 == other.y || self.y - 1 == other.y) {
+        if (self.row + 1 == other.row || self.row - 1 == other.row) &&
+           (self.column + 1 == other.column || self.column - 1 == other.column) {
            return true;
         }
         false
@@ -23,12 +23,12 @@ mod tests {
     
     #[test]
     fn test_is_catty_corner() {
-        let from: Position = Position {x: 1, y: 1};
-        assert_eq!(true, from.is_catty_corner(Position {x: 0, y: 0}));
-        assert_eq!(true, from.is_catty_corner(Position {x: 2, y: 2}));
-        assert_eq!(true, from.is_catty_corner(Position {x: 0, y: 2}));
-        assert_eq!(true, from.is_catty_corner(Position {x: 2, y: 0}));
-        assert_eq!(false, from.is_catty_corner(Position {x: 0, y: 1}));
-        assert_eq!(false, from.is_catty_corner(Position {x: 1, y: 1}));
+        let from: Position = Position {row: 1, column: 1};
+        assert_eq!(true, from.is_catty_corner(Position {row: 0, column: 0}));
+        assert_eq!(true, from.is_catty_corner(Position {row: 2, column: 2}));
+        assert_eq!(true, from.is_catty_corner(Position {row: 0, column: 2}));
+        assert_eq!(true, from.is_catty_corner(Position {row: 2, column: 0}));
+        assert_eq!(false, from.is_catty_corner(Position {row: 0, column: 1}));
+        assert_eq!(false, from.is_catty_corner(Position {row: 1, column: 1}));
     }
 }
