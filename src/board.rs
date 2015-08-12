@@ -1,7 +1,7 @@
 use piece::Piece;
 use position::Position;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 enum MoveError {IsNotCattyCorner, BlockedByPiece}
 
 
@@ -114,9 +114,9 @@ impl Board {
     /// assert_eq!(true, board.valid_move(Position {row: 0, column: 2},
     ///                                   Position {row: 1, column: 3}))
     fn valid_move(&self, from: Position, to: Position) -> Result<(), MoveError> {
-        let piece: Option<Piece> = self.get_at_position(from);
+        let to_piece: Option<Piece> = self.get_at_position(to);
         //TODO: this function isn't working correctly.
-        if piece.is_some() {
+        if to_piece.is_some() {
             return Err(MoveError::BlockedByPiece);
         }
         // Catty-corner check
@@ -140,6 +140,7 @@ impl Default for Board {
 #[cfg(test)]
 mod tests {
     use super::Board;
+    use super::MoveError;
     use position::Position;
     
     #[test]
@@ -148,7 +149,13 @@ mod tests {
         board.new_game();
         println!("{:?}", board.places[2][0]);
         println!("{:?}", board.places[3][1]);
-        assert_eq!(true, board.valid_move(
-            Position {row: 2, column: 0}, Position {row: 3, column: 1}));
+        assert_eq!(Ok(()), board.valid_move(Position {row: 2, column: 0}, 
+                                            Position {row: 3, column: 1}));
+        assert_eq!(Err(MoveError::BlockedByPiece), 
+                   board.valid_move(Position {row: 1, column: 1}, 
+                                    Position {row: 2, column: 2}));
+        assert_eq!(Err(MoveError::IsNotCattyCorner), 
+                   board.valid_move(Position {row: 1, column: 1}, 
+                                    Position {row: 3, column: 2}));
     }
 }
