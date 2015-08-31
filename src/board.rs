@@ -123,6 +123,7 @@ impl Board {
     ///                                    Position {row: 1, column: 0}))
     /// assert_eq!(true, board.valid_move(Position {row: 0, column: 2},
     ///                                   Position {row: 1, column: 3}))
+    /// ```
     fn valid_move(&self, from: Position, to: Position) -> Result<(), MoveError> {
         let from_piece: Piece;
 
@@ -191,6 +192,8 @@ mod tests {
                          Position {row: 4, column: 2});
         board.move_piece(Position {row: 2, column: 2},
                          Position {row: 3, column: 3});
+
+        // Double catty-corner over piece
         assert_eq!(Ok(()), board.valid_move(Position {row: 5, column: 3},
                                             Position {row: 3, column: 1}));
         assert_eq!(Err(MoveError::IsNotCattyCorner),
